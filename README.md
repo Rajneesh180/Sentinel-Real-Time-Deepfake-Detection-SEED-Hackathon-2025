@@ -10,7 +10,7 @@ A complete overview of the system we used to train, evaluate, and deploy our dee
 
 ---
 
-# ## 📘 Table of Contents
+## 📘 Table of Contents
 
 1. [Introduction](#introduction)
 2. [High-Level Model Flow](#high-level-model-flow)
@@ -29,13 +29,13 @@ A complete overview of the system we used to train, evaluate, and deploy our dee
 
 ---
 
-# ## Introduction
+## Introduction
 
 This repository implements a **frame-level deepfake detection system**, heavily optimized for performance on the DFDC dataset. Rather than relying on temporal models or video-sequence networks, the design emphasizes **independent frame classification followed by a robust aggregation step**, which empirically surpassed more complex approaches.
 
 ---
 
-# ## High-Level Model Flow
+## High-Level Model Flow
 
 ```
 Video → Dynamic Face Detector → Cropped Frames  
@@ -48,7 +48,7 @@ The pipeline was designed for reproducibility, GPU efficiency, and compatibility
 
 ---
 
-# ## Face Detection Strategy
+## Face Detection Strategy
 
 MTCNN served as the backbone face detector due to its consistent speed inside kernel limits.
 Even though S3FD offers better robustness, available PyTorch builds lack compatible licenses, ruling it out.
@@ -66,7 +66,7 @@ This prevents unnecessary computational load while retaining detection accuracy.
 
 ---
 
-# ## Image Dimensions & Cropping
+## Image Dimensions & Cropping
 
 ### Input Resolution
 
@@ -91,7 +91,7 @@ This encoder delivered the strongest results across all experiments.
 
 ---
 
-# ## Frame Aggregation Logic
+## Frame Aggregation Logic
 
 Each video contributes **32 sampled frames**.
 
@@ -115,7 +115,7 @@ The heuristic effectively handles videos dominated by strong fake cues or overwh
 
 ---
 
-# ## Augmentation Pipeline
+## Augmentation Pipeline
 
 Augmentations are intentionally aggressive to counter dataset bias. Most transforms come from **Albumentations**, supplemented with a custom isotropic resize operator.
 
@@ -141,7 +141,7 @@ Additional robustness was gained using **cutout-style masking**, simulating occl
 
 ---
 
-# ## Environment & Docker Setup
+## Environment & Docker Setup
 
 ### Build
 
@@ -217,7 +217,7 @@ python preprocessing/generate_folds.py --root-dir DATA_ROOT --out folds.csv
 
 ---
 
-# ## Training Configuration
+## Training Configuration
 
 Training five B7 models (with five seeds) is automated in:
 
@@ -230,7 +230,7 @@ train.sh
 
 ---
 
-# ## Monitoring & Logs
+## Monitoring & Logs
 
 Plot loss curves using:
 
@@ -240,7 +240,7 @@ python plot_loss.py --log-file logs/<log_file>
 
 ---
 
-# ## Inference & Submission
+## Inference & Submission
 
 Inference replicates the same logic used in the competition kernel:
 
@@ -262,7 +262,7 @@ Example:
 
 ---
 
-# ## Pretrained Weights
+## Pretrained Weights
 
 Download all model weights before building Docker:
 
